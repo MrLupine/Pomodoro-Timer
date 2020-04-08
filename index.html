@@ -8,19 +8,21 @@
   <meta name="description" content="Pomodoro-Timer">
   <meta name="author" content="SitePoint">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
     <div class ="container">
-        <button class="container__button" id="container__button--25">25 Minute Timer</button>
-        <button class="container__button" id="container__button--short-break"></button>
-        <button class="container__button" id="container__button--long-break">  </button>
-        <button id="container__clock"></button>
-        <button class="button" id="start"></button>
-        <button class="button" id="pause"></button>
-        <button class="button" id="stop"></button>
+        <button class="container__button" id="pomodoro">25 Minute Timer</button>
+        <button class="container__button" id="short">Short Break</button>
+        <button class="container__button" id="long">Long Break</button>
+        <div id="container__clock">
+          <p id="container__clock--timer">25:00</p>
+        </div>
+        <button class="container__button" id="start">Start</button>
+        <button class="container__button" id="pause">Pause</button>
+        <button class="container__button" id="stop">Stop</button>
     </div>
-  <script src="scripts.js"></script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>
