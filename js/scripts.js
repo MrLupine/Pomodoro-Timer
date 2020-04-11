@@ -5,7 +5,7 @@ document.querySelectorAll(".container__button").forEach(button => {
 })
 
 const domUpdate = (mins, secs) => {
-	const domMinutes = document.getElementById("minutes")
+	const domMinutes = document.getElementById("minutes");
 	const domSeconds = document.getElementById("seconds");
 	domMinutes.innerHTML = `${mins}`;
 	domSeconds.innerHTML = `${secs}`;
@@ -52,7 +52,7 @@ const timerButtonsMap = {
 	"pause": () => {
 		stopIfStarted();
 		document.body.style.backgroundColor = "rgb(175, 175, 175)"
-		domColon.style.color = "white"; 
+		document.getElementById("colon").style.color = "white"; 
 		document.title = "PAUSED";
 	},
 }
