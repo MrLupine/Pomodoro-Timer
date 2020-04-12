@@ -1,14 +1,22 @@
 document.querySelectorAll(".clock__button").forEach(button => {
 	button.addEventListener("click", (e) => {
+		stopIfStarted();
+		console.log(e.target.id)
+		if (buttonCheck(`${e.target.id}`)){
+			timerFunctions.type = `${e.target.id}`;
+			timerFunctions.milliseconds = `${minsToMilli(inputValueGetter(e.target.id))}`
+		}
 		timerButtonsMap[`${e.target.id}`]();
 	})
 })
 
+const doubleDigitCheck = digit => digit < 10 ? `0${digit}` : digit < 0 ? "00" : `${digit}`; // if digit doesn't have a tenths place, place a zero before digit
+
+const buttonCheck = e => ["pomodoro", "short", "long"].includes(e)
+
 const domUpdate = (mins, secs) => {
-	const domMinutes = document.getElementById("minutes");
-	const domSeconds = document.getElementById("seconds");
-	domMinutes.innerHTML = `${mins}`;
-	domSeconds.innerHTML = `${secs}`;
+	document.getElementById("minutes").innerHTML = `${mins}`;
+	document.getElementById("seconds").innerHTML = `${secs}`;
 	(timerFunctions.type === "pomodoro") ? 
 		document.title = `Pomodoro | ${mins}:${secs}`: document.title = `Break | ${mins}:${secs}`;
 }
@@ -23,36 +31,24 @@ const inputValueGetter = x => Number(document.getElementById(`${x}Minutes`).valu
 
 const colourGetter = x => `${timerFunctions.milliseconds / colourAdjust(timerFunctions.type, x) + 70}`
 
-const timerButtonsMap = {
-	"pomodoro": () => {
-		stopIfStarted();
-		timerFunctions.type = "pomodoro";
-		timerFunctions.colourInputs = () => `255, ${colourGetter(50)}, 25`;
-		domUpdate(`${inputValueGetter(timerFunctions.type)}`, "00");
-		startStop(minsToMilli(`${inputValueGetter(timerFunctions.type)}`));
-	},
-	"short": () => {
-		stopIfStarted();
-		timerFunctions.type = "short";
-		timerFunctions.colourInputs = () => `19, 191, ${colourGetter(120)}`;
-		domUpdate(`${inputValueGetter(timerFunctions.type)}`, "00");
-		startStop(minsToMilli(`${inputValueGetter(timerFunctions.type)}`));
-	},
-	"long": () => {
-		stopIfStarted();
+const buttonAction = (rgbValue) => {
+	timerFunctions.colourInputs = () => rgbValue;
+	domUpdate(`${doubleDigitCheck(inputValueGetter(timerFunctions.type))}`, "00");
+	startStop(minsToMilli(`${inputValueGetter(timerFunctions.type)}`));
+	if (timerFunctions.type === "long") {
 		timerFunctions.pomodoroCount = 0;
-		timerFunctions.type = "long";
-		timerFunctions.colourInputs = () => `19, 191, ${colourGetter(120)}}`;
-		domUpdate(`${inputValueGetter(timerFunctions.type)}`, "00");
-		startStop(minsToMilli(`${inputValueGetter(timerFunctions.type)}`));
-	},
+	}
+}
+
+const timerButtonsMap = {
+	"pomodoro": () => {buttonAction(`255, ${colourGetter(50)}, 25`)},
+	"short": () => {buttonAction(`19, 191, ${colourGetter(120)}`)},
+	"long": () => {buttonAction(`19, 191, ${colourGetter(120)}`)},
 	"start": () => {
-		stopIfStarted();
 		bodyColourUpdate("255, 114, 49");
 		startStop(timerFunctions.milliseconds);
 	},
 	"stop": () => {
-		stopIfStarted();
 		timerFunctions.timeReset();
 		bodyColourUpdate("175, 175, 175");
 		domUpdate("00", "00")
@@ -60,7 +56,6 @@ const timerButtonsMap = {
 		console.log("testing")
 	},
 	"pause": () => {
-		stopIfStarted();
 		bodyColourUpdate("175, 175, 175");
 		document.getElementById("colon").style.color = "white"; 
 		document.title = "PAUSED";
@@ -101,9 +96,10 @@ const timerFunctions = {
 	pomodoroCount: 0,
 	timeWorked: 0,
 	timeRested: 0,
-	timeSpent: () => {
-		document.getElementById("working").innerHTML = `${timerFunctions.timeWorked}`
-		document.getElementById("resting").innerHTML = `${timerFunctions.timeRested}`
+	timeSpent: (action) => {
+		(action === "working") ?
+		document.getElementById("working").innerHTML = `${timerFunctions.timeWorked}`:
+		document.getElementById("resting").innerHTML = `${timerFunctions.timeRested}`;
 	},
 	timeReset: () => {
 		timerFunctions.milliseconds = 0;
@@ -135,13 +131,12 @@ const colonFlash = () => {
 }
 
 let timerOutput = (futureTime, startTime) => {
-	const type = (timerFunctions.type === "pomodoro") ? true : false;
+	const type = (timerFunctions.type === "pomodoro");
 	let currentTime = new Date().getTime();
 	let countdownMilliseconds = futureTime - currentTime;
 	(timerFunctions.type === 'pomodoro') ? 
 		timerFunctions.timeWorked += (currentTime - startTime) : timerFunctions.timeRested += (currentTime - startTime);
 	timerFunctions.timeSpent();
-	const doubleDigitCheck = digit => digit < 10 ? `0${digit}` : digit < 0 ? "00" : `${digit}`; // if digit doesn't have a tenths place, place a zero before digit
 	let minutes = Math.floor((countdownMilliseconds + 1000) / 60000); // add one second locally to minutes so that minutes change at correct time
 	let seconds = ((countdownMilliseconds % 60000) / 1000).toFixed(0);
 	const secondsCheck = (x) => (x === "60") ? 00 : Number(x); // on 60 seconds left, display "00" instead
@@ -160,3 +155,6 @@ let timerOutput = (futureTime, startTime) => {
 		timerButtonsMap["pomodoro"]();
 	 }
 };
+
+
+
