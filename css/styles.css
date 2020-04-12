@@ -1,5 +1,4 @@
 * {
-	/*Resets every element's apperance*/
 	background: none repeat scroll 0 0 transparent;
 	border: medium none;
 	border-spacing: 0;
@@ -16,6 +15,29 @@
 	-ms-user-select: none; /* Internet Explorer/Edge */
 }
 
+input[type="number"] {
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+	appearance: textfield;
+	outline:none;
+	-webkit-appearance: none;
+	background-color: transparent;
+	border: none;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	margin: 0;
+	position: relative;
+	font-size: 2.5vmin;
+	color: white;
+	text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+}
+
 body {
 	font-family: 'Open Sans', sans-serif;
 	display: grid;
@@ -24,56 +46,107 @@ body {
 	height: 100vh;
 	align-items: center;
 	background-color: rgb(175, 175, 175);
+	transition: background-color 0.75s ease-in;
 }
 
-.container {
+.clock {
 	display: grid;
 	grid-column: 2/3;
 	grid-row: 2/3;
-	grid-gap: 5%;
+	grid-gap: 7%;
 	grid-template:
-		[row1-start] "pomodoro pomodoro timer timer timer" 1fr [row1-end]
-		[row2-start] "short short timer timer timer" 1fr [row2-end]
-		[row3-start] "long long start pause stop" 1fr [row3-end]/ 2fr 2fr 3fr 3fr 3fr;
+		[row1-start] "pomodoro timer timer timer" 1fr [row1-end]
+		[row2-start] "short timer timer timer" 1fr [row2-end]
+		[row3-start] "long start pause stop" 1fr [row3-end]/ 5fr 3fr 3fr 3fr;
 	height: 30vw;
 	max-height: 36vh;
-	max-width: 90vh;
+	max-width: 96vh;
 	padding: 1.25%;
-	width: 75vw;
+	width: 80vw;
 }
 
-.container__button {
+.clock__button-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.clock__button {
 	outline: transparent;
 }
 
-.container__button--duration {
-	font-size: 3vmin;
+.clock__button > * {
+	pointer-events: none;
+}
+
+.clock__button--duration {
+	font-size: 2.5vmin;
 	font-weight: 400;
 	border-radius: 2% 2% 2% 2% / 6% 6% 6% 6%;
-	background-color: rgb(200, 200, 200);
+	background-color: inherit;
 	text-align: center;
 	letter-spacing: 0.05em;
 	color: white;
+	width: 100%;
+	padding-right: 25%;
 }
 
-.container__button--function {
+.clock__button--function {
 	display: flex;
 	justify-content: center;
 }
 
-.container__button > * {
+.clock__timer-setting {
+	margin-left: -4vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 4vmin;
+	position: relative;
+	left: -1.85vw
+}
+
+.clock__button {
+	outline: transparent;
+}
+
+.clock__timer-setting--arrow {
+	width: 75%;
+	outline: transparent;
+}
+
+.clock__timer-setting--arrow > * {
 	pointer-events: none;
 }
 
-#pomodoro {
+.clock__button-box--pomodoro {
 	grid-area: pomodoro;
 }
 
-#short{
+.clock__button--darken-colour-pomodoro {
+	border-radius: 2% 2% 2% 2% / 6% 6% 6% 6%;
+	background-color: rgba(129, 129, 129, 0.199);
+	grid-area: pomodoro;
+}
+
+.clock__button-box--short {
 	grid-area: short;
 }
 
-#long{
+.clock__button--darken-colour-short {
+	border-radius: 2% 2% 2% 2% / 6% 6% 6% 6%;
+	background-color: rgba(129, 129, 129, 0.199);
+	grid-area: short;
+}
+
+.clock__button-box--long {
+	grid-area: long;
+}
+
+.clock__button--darken-colour-long {
+	border-radius: 2% 2% 2% 2% / 6% 6% 6% 6%;
+	background-color: rgba(129, 129, 129, 0.199);
 	grid-area: long;
 }
 
@@ -89,21 +162,21 @@ body {
 	grid-area: stop;
 }
 
-.container__clock{
+.clock__clock{
 	display: flex;
 	flex-direction: column;
 	grid-area: timer;
 	color: white;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
-	font-size: clamp(12vh, 19vw, 23vh);
+	font-size: clamp(12vh, 21vw, 25vh);
 	position: relative;
-	top: -33%;
+	top: -37%;
 }
 
-.container__clock--count {
+.clock__clock--count {
 	position: relative;
-	bottom: 17%;
+	bottom: 23%;
 	display: flex;
 	justify-content: space-around;
 }
@@ -113,10 +186,10 @@ body {
 	top: -.075em;
 }
 
-.container__clock--count-pomodoros {
+.clock__clock--count-pomodoros {
 	font-size: 2vmin;
 }
 
-.container__clock--count-breaks {
+.clock__clock--count-breaks {
 	font-size: 2vmin;
 }
