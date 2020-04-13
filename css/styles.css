@@ -26,11 +26,12 @@ input[type="number"] {
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	margin: 0;
+	margin: 0.2vw;
 	position: relative;
 	font-size: 2.5vmin;
 	color: white;
 	text-align: center;
+	width: 3.5vw;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -46,7 +47,7 @@ body {
 	height: 100vh;
 	align-items: center;
 	background-color: rgb(175, 175, 175);
-	transition: background-color 0.75s ease-in;
+	transition: background-color 0.75s cubic-bezier(0.08, 1.04, 1, 1);
 }
 
 .clock {
@@ -81,7 +82,7 @@ body {
 
 .clock__button--duration {
 	font-size: 2.5vmin;
-	font-weight: 400;
+	font-weight: 500;
 	border-radius: 2% 2% 2% 2% / 6% 6% 6% 6%;
 	background-color: inherit;
 	text-align: center;
@@ -100,11 +101,11 @@ body {
 	margin-left: -4vw;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
 	width: 4vmin;
 	position: relative;
-	left: -1.85vw
+	left: -1.4vw
 }
 
 .clock__button {

@@ -22,7 +22,7 @@
           <button class="clock__timer-setting--arrow" id="pomodoroPlus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M202.25.86,394.49,86.27c3,1.32,2.22,6.79-.95,6.79H2.83c-3.17,0-3.94-5.47-1-6.79L194.12.86A10,10,0,0,1,202.25.86Z" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
-          <input type="number" id="pomodoroMinutes" name="pomodoroMinutes" min="1" max="60" value="25" class="clock__timer-setting--input">
+          <input type="number" id="pomodoroMinutes" name="pomodoroMinutes" pattern="^[1-5][0-9]?|60" value="25" class="clock__timer-setting--input">
           <button class="clock__timer-setting--arrow" id="pomodoroMinus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M194.12,92.19,1.88,6.79C-1.11,5.46-.34,0,2.83,0H393.54c3.17,0,3.94,5.46.95,6.79L202.25,92.19A10,10,0,0,1,194.12,92.19Z" transform="translate(0 0)" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
@@ -35,7 +35,7 @@
           <button class="clock__timer-setting--arrow" id="shortPlus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M202.25.86,394.49,86.27c3,1.32,2.22,6.79-.95,6.79H2.83c-3.17,0-3.94-5.47-1-6.79L194.12.86A10,10,0,0,1,202.25.86Z" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
-          <input type="number" id="shortMinutes" name="shortMinutes" min="1" max="60" value="5" class="clock__timer-setting--input">
+          <input type="number" id="shortMinutes" name="shortMinutes" pattern="^[1-5][0-9]?|60" value="5" class="clock__timer-setting--input">
           <button class="clock__timer-setting--arrow" id="shortMinus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M194.12,92.19,1.88,6.79C-1.11,5.46-.34,0,2.83,0H393.54c3.17,0,3.94,5.46.95,6.79L202.25,92.19A10,10,0,0,1,194.12,92.19Z" transform="translate(0 0)" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
@@ -48,7 +48,7 @@
           <button class="clock__timer-setting--arrow" id="longPlus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M202.25.86,394.49,86.27c3,1.32,2.22,6.79-.95,6.79H2.83c-3.17,0-3.94-5.47-1-6.79L194.12.86A10,10,0,0,1,202.25.86Z" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
-          <input type="number" id="longMinutes" name="longMinutes" min="1" max="60" value="10" class="clock__timer-setting--input">
+          <input type="number" id="longMinutes" name="longMinutes" pattern="^[1-5][0-9]?|60" value="10" class="clock__timer-setting--input">
           <button class="clock__timer-setting--arrow" id="longMinus">
             <svg xmlns="http://www.w3.org/2000/svg" width:"100%" viewBox="0 0 396.37 93.06"><title>Untitled-2</title><path d="M194.12,92.19,1.88,6.79C-1.11,5.46-.34,0,2.83,0H393.54c3.17,0,3.94,5.46.95,6.79L202.25,92.19A10,10,0,0,1,194.12,92.19Z" transform="translate(0 0)" style="fill:rgba(255, 255, 255, 0.76)"/></svg>
           </button>
@@ -57,8 +57,8 @@
       <div class="clock__clock">
         <p class="clock__clock--timer"><span id="minutes">25</span><span id="colon">:</span><span id="seconds">00</span></p>
         <div class="clock__clock--count">
-          <p class="clock__clock--count-pomodoros" id="working">Worked: 00H 00M</p>
-          <p class="clock__clock--count-breaks" id="resting">Rested: 00H 00M</p>
+          <p class="clock__clock--count-pomodoros" id="Working">Worked: <span class="timer__count" id="timeWorked">00H 00M</span></p>
+          <p class="clock__clock--count-breaks" id="Resting">Rested: <span class="timer__count" id="timeRested">00H 00M</span></p>
         </div>
       </div>
       <button class="clock__button clock__button--function" id="start">
@@ -81,6 +81,8 @@
           <rect width="518.4" height="518.4" rx="19.7" style="fill:#fff;;"/>
         </svg>
       </button>
+      <audio id="rooster" src="audio/rooster.mp3" preload="auto"></audio>
+      <audio id="wolf" src="audio/wolf.mp3" preload="auto"></audio>
     </div>
   <script src="js/scripts.js"></script>
 </body>
