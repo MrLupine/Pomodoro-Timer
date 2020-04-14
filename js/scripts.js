@@ -17,7 +17,7 @@ document.querySelectorAll(".clock__timer-setting--arrow").forEach(button => {
 
 document.querySelectorAll(".clock__timer-setting--input").forEach(input => {
 	input.addEventListener("input", (e) => {
-		stopIfStarted
+		stopIfStarted;
 		let inputValue = document.getElementById(`${e.target.id}`).value
 		if (inputValue < 1) {
 			inputValue = "";
@@ -67,8 +67,8 @@ const timerFunctions = {
 	timeWorked: 0,
 	timeRested: 0,
 	timeSpent: (action) => { //display time worked or rested accordingly.
-		const hours = x => Math.floor(x / 3600000);
-		const mins = x => Math.floor(x / 60000);
+		const hours = x => Math.floor((x % 356400000) / 3600000);
+		const mins = x => Math.floor((x % 3600000) / 60000);
 		document.getElementById(`${action}`).innerHTML = 
 			`${doubleDigitCheck(hours(timerFunctions[action]))}H ${doubleDigitCheck(mins(timerFunctions[action]))}M`; 
 	},
@@ -83,7 +83,7 @@ const timerFunctions = {
 const bodyColourUpdate = x => document.body.style.backgroundColor = `rgb(${x})`;
 
 const buttonAction = (x) => {
-	stopIfStarted()
+	stopIfStarted();
 	timerFunctions.type = `${x}`;
 	timerFunctions.milliseconds = `${minsToMilli(inputValueGetter(x))}`
 	domUpdate(`${doubleDigitCheck(inputValueGetter(x))}`, "00");
@@ -162,8 +162,8 @@ let timerOutput = (futureTime, startTime) => {
 	timerFunctions.milliseconds = countdownMilliseconds;
 	bodyColourUpdate(`${timerFunctions.colourInputs()}`);
 	const type = (timerFunctions.type === "pomodoro");
-	/* calculate and track time elapsed since last interval. */
-	const addTime = () => (currentTime - startTime); 
+	/* calculate and track time elapsed since interval start. */
+	const addTime = () => (currentTime - startTime);
 	if (type) {
 		timerFunctions.timeWorked = addTime();
 		timerFunctions.timeSpent("timeWorked") 
@@ -176,14 +176,14 @@ let timerOutput = (futureTime, startTime) => {
 	const secondsCheck = (x) => (x === "60") ? 00 : Number(x); // on 60 seconds left, display "00" instead
 	domUpdate(doubleDigitCheck(minutes), doubleDigitCheck(secondsCheck(seconds)))
 	if (countdownMilliseconds < 0 && type) {
-		document.getElementById('rooster').play();
+		document.getElementById('wolf').play();
 	 	if (timerFunctions.pomodoroCount < 5) {
 			buttonAction("short");
 	 	} else {
 			buttonAction("long");
 		}
 	} else if (countdownMilliseconds < 0 && !type){
-		document.getElementById('wolf').play();
+		document.getElementById('rooster').play();
 		buttonAction("pomodoro");
 	}
 };
