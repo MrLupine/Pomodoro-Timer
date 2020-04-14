@@ -64,13 +64,16 @@ const timerFunctions = {
 	colourInputs: "",
 	type: "",
 	pomodoroCount: 0,
+	timeWorking: 0,
+	timeResting: 0,
 	timeWorked: 0,
 	timeRested: 0,
 	timeSpent: (action) => { //display time worked or rested accordingly.
 		const hours = x => Math.floor((x % 356400000) / 3600000);
 		const mins = x => Math.floor((x % 3600000) / 60000);
-		document.getElementById(`${action}`).innerHTML = 
-			`${doubleDigitCheck(hours(timerFunctions[action]))}H ${doubleDigitCheck(mins(timerFunctions[action]))}M`; 
+		document.getElementById(`${action}ed`).innerHTML = 
+			`${doubleDigitCheck(hours((timerFunctions[`${action}ed`] + timerFunctions[`${action}ing`])))}H 
+			 ${doubleDigitCheck(mins((timerFunctions[`${action}ed`] + timerFunctions[`${action}ing`])))}M`; 
 	},
 	timeReset: () => {
 		this.milliseconds = 0;
@@ -154,6 +157,12 @@ const stopIfStarted = () => {
 		clearInterval(countdownTimer);
 		clearInterval(activeTimer);
 	}
+	/* Save amount of time spent during interval before timer stopped. */
+	if (timerFunctions.type === "pomodoro") {
+		timerFunctions.timeWorked += timerFunctions.timeWorking;
+	} else {
+		timerFunctions.timeRested += timerFunctions.timeResting;
+	}
 }
 
 let timerOutput = (futureTime, startTime) => {
@@ -165,11 +174,11 @@ let timerOutput = (futureTime, startTime) => {
 	/* calculate and track time elapsed since interval start. */
 	const addTime = () => (currentTime - startTime);
 	if (type) {
-		timerFunctions.timeWorked = addTime();
-		timerFunctions.timeSpent("timeWorked") 
+		timerFunctions.timeWorking = addTime();
+		timerFunctions.timeSpent("timeWork") 
 	} else {
-		timerFunctions.timeRested = addTime();
-		timerFunctions.timeSpent("timeRested");
+		timerFunctions.timeResting = addTime();
+		timerFunctions.timeSpent("timeRest");
 	};
 	let minutes = Math.floor((countdownMilliseconds + 1000) / 60000); // add one second locally to minutes so that minutes change at correct time
 	let seconds = ((countdownMilliseconds % 60000) / 1000).toFixed(0);
